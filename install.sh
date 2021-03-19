@@ -15,3 +15,9 @@ git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$
 
 echo "Copying over powerlevel10k config..."
 cp .p10k.zsh $HOME/.p10k.zsh
+
+echo "Installing tools..."
+if ! command -v thefuck &> /dev/null; then
+  sudo apt-get install -y python3-dev python3-pip python3-setuptools
+  sudo pip3 install thefuck
+fi
