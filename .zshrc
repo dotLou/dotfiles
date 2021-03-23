@@ -35,3 +35,7 @@ zstyle :bracketed-paste-magic paste-finish pastefinish
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 eval $(thefuck --alias)
+
+if [[ $(command -v spin) ]]; then
+  source <(spin completion zsh)
+fi
