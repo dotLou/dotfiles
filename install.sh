@@ -17,6 +17,7 @@ echo "Linking powerlevel10k config..."
 ln -s $PWD/.p10k.zsh $HOME/.p10k.zsh
 
 echo "Linking gitconfig..."
+rm -rf $HOME/.gitconfig
 ln -s $PWD/.gitconfig $HOME/.gitconfig
 
 echo "Installing tools..."
