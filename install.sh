@@ -16,6 +16,9 @@ git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$
 echo "Linking powerlevel10k config..."
 ln -s $PWD/.p10k.zsh $HOME/.p10k.zsh
 
+echo "Linking gitconfig..."
+ln -s $PWD/.gitconfig $HOME/.gitconfig
+
 echo "Installing tools..."
 if ! command -v thefuck &> /dev/null; then
   sudo apt-get install -y python3-dev python3-pip python3-setuptools
@@ -27,7 +30,4 @@ if [ $SPIN ]; then
   echo "Configure gpg keys..."
   gpgconf --launch dirmngr
   gpg --keyserver keys.openpgp.org --recv 1918338DA390B1AD0D3ECFB839146C2818B26AFE
-
-  echo "Configure github to automatically sign with gpg..."
-  git config commit.gpgsign true
 fi
