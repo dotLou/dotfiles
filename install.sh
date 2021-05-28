@@ -21,3 +21,13 @@ if ! command -v thefuck &> /dev/null; then
   sudo apt-get install -y python3-dev python3-pip python3-setuptools
   sudo pip3 install thefuck
 fi
+
+echo "Installing spin specific tools..."
+if [ $SPIN ]; then
+  echo "Configure gpg keys..."
+  gpgconf --launch dirmngr
+  gpg --keyserver keys.openpgp.org --recv 1918338DA390B1AD0D3ECFB839146C2818B26AFE
+
+  echo "Configure github to automatically sign with gpg..."
+  git config commit.gpgsign true
+fi
