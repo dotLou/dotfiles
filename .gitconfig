@@ -2,4 +2,4 @@
 	name = Louis Cloutier
 	email = louis.cloutier@shopify.com
 [commit]
-	gpgsign = true
+	gpgsign = false
