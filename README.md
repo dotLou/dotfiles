@@ -11,6 +11,7 @@ dotlou's default dotfiles
   - [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting)
   - [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions)
 - [thefuck](https://github.com/nvbn/thefuck)
+- GPG signing public key + gitconfig to enforce signing of commits
 
 ![shell prompt](./images/powerline10k.png)
 
