@@ -39,3 +39,7 @@ eval $(thefuck --alias)
 if [[ $(command -v spin) ]]; then
   source <(spin completion zsh)
 fi
+
+if [[ $(command -v journalctl) ]]; then
+  alias jc=journalctl
+fi
