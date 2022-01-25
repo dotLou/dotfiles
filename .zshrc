@@ -43,3 +43,7 @@ fi
 if [[ $(command -v journalctl) ]]; then
   alias jc=journalctl
 fi
+
+if [[ $(command -v systemctl) ]]; then
+  alias sc=systemctl
+fi
