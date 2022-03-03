@@ -22,7 +22,7 @@ ln -s $PWD/.gitconfig $HOME/.gitconfig
 
 echo "Installing tools..."
 if ! command -v thefuck &> /dev/null; then
-  sudo apt-get install -y python3-dev python3-pip python3-setuptools
+  sudo apt-get install -y python3-dev python3-pip python3-setuptools dirmngr
   sudo pip3 install thefuck
 fi
 
