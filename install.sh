@@ -21,8 +21,21 @@ rm -rf $HOME/.gitconfig
 ln -s $PWD/.gitconfig $HOME/.gitconfig
 
 echo "Installing tools..."
+
+# load packages to install list from packages.yml
+packages_to_install=$(cat packages.yml | grep -v '^#' | grep -v '^$' | awk '{print $2}')
+# For each package, install it if it's not installed
+for package in "${packages_to_install[@]}"; do
+  if ! command -v $package &> /dev/null; then
+    echo "Installing $package via apt-get..."
+    sudo apt-get install -y $package
+  else
+    echo "Package $package already installed"
+  fi
+done
+
 if ! command -v thefuck &> /dev/null; then
-  sudo apt-get install -y python3-dev python3-pip python3-setuptools dirmngr
+  echo "Installing thefuck via pip3..."
   sudo pip3 install thefuck
 fi
 
