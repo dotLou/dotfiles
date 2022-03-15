@@ -37,7 +37,7 @@ zstyle :bracketed-paste-magic paste-finish pastefinish
 eval $(thefuck --alias)
 
 if [[ $(command -v spin) ]]; then
-  source <(spin completion zsh)
+  source <(spin completion)
 fi
 
 if [[ $(command -v journalctl) ]]; then
