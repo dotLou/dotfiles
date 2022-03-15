@@ -41,6 +41,8 @@ fi
 
 echo "Installing spin specific tools..."
 if [ $SPIN ]; then
+  echo "Ensure dirmngr daemon is started..."
+  gpgconf --launch dirmngr
   echo "Configure gpg keys..."
   gpg --keyserver keys.openpgp.org --recv 1918338DA390B1AD0D3ECFB839146C2818B26AFE
 fi
