@@ -47,3 +47,16 @@ fi
 if [[ $(command -v systemctl) ]]; then
   alias sc=systemctl
 fi
+
+# if $HOME/zsh_extras directory exists, source all files in $HOME/zsh_extras if any exist
+if [[ -d $HOME/zsh_extras ]]; then
+  # return early if no files exist
+  if [[ ! "$(ls -A $HOME/zsh_extras)" ]]; then
+    return
+  fi
+  for file in $HOME/zsh_extras/*.sh; do
+    if [[ -f $file ]]; then
+      source $file
+    fi
+  done
+fi
