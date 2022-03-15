@@ -22,8 +22,8 @@ ln -s $PWD/.gitconfig $HOME/.gitconfig
 
 echo "Installing tools..."
 
-# load packages to install list from packages.yml
-packages_to_install=$(cat packages.yml | grep -v '^#' | grep -v '^$' | awk '{print $2}')
+# load packages to install array from packages.yml into packages_to_install using mapfile
+packages_to_install=($(awk -F"- " '{printf $2 "\n"}' packages.yml))
 # For each package, install it if it's not installed
 for package in "${packages_to_install[@]}"; do
   if ! command -v $package &> /dev/null; then
