@@ -60,3 +60,7 @@ if [[ -d $HOME/zsh_extras ]]; then
     fi
   done
 fi
+
+if [[ $(command -v vim) ]]; then
+  export EDITOR=vim
+fi
