@@ -34,7 +34,9 @@ zstyle :bracketed-paste-magic paste-finish pastefinish
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-eval $(thefuck --alias)
+if [[ $(command -v thefuck) ]]; then
+  eval $(thefuck --alias)
+fi
 
 if [[ $(command -v spin) ]]; then
   source <(spin completion)
