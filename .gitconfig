@@ -3,3 +3,6 @@
 	email = louis.cloutier@shopify.com
 [commit]
 	gpgsign = true
+[rebase]
+	autosquash = true
+	updateRefs = true
