@@ -37,6 +37,9 @@ zstyle :bracketed-paste-magic paste-finish pastefinish
 if [[ $(command -v thefuck) ]]; then
   eval $(thefuck --alias)
 fi
+if [[ $(command -v gt) ]]; then
+  source <(gt completion)
+fi
 
 if [[ $(command -v spin) ]]; then
   source <(spin completion)
