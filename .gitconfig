@@ -6,3 +6,5 @@
 [rebase]
 	autosquash = true
 	updateRefs = true
+[push]
+	autoSetupRemote = true
