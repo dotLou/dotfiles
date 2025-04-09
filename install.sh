@@ -46,3 +46,10 @@ if [ $SPIN ]; then
   echo "Configure gpg keys..."
   gpg --keyserver keys.openpgp.org --recv 1918338DA390B1AD0D3ECFB839146C2818B26AFE
 fi
+
+echo "Linking .vimrc ..."
+if [ -f $HOME/.vimrc ]; then
+  mv $HOME/.vimrc $HOME/.vimrc_backup
+  echo "Backed up existing .vimrc to .vimrc_backup"
+fi
+ln -s $PWD/.vimrc $HOME/.vimrc
