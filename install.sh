@@ -4,10 +4,20 @@ echo "Installing oh my zsh..."
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 echo "Configuring zsh..."
+echo "Installing zshenv..."
+mv $HOME/.zshenv $HOME/.zshenv_backup
+ln -s $PWD/.zshenv $HOME/.zshenv
+echo "Installing zshrc..."
 mv $HOME/.zshrc $HOME/.zshrc_backup
 ln -s $PWD/.zshrc $HOME/.zshrc
+
+echo "Installing zsh-completions..."
 git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/zsh-completions
+
+echo "Installing zsh-syntax-highlighting..."
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+
+echo "Installing zsh-autosuggestions..."
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
 echo "Installing powerlevel10k..."
@@ -34,9 +44,21 @@ for package in "${packages_to_install[@]}"; do
   fi
 done
 
+# Install uv for python package management
+if ! command -v uv &> /dev/null; then
+  echo "Installing uv..."
+  if command -v brew &> /dev/null; then
+    echo "Installing uv via brew..."
+    brew install uv
+  else
+    echo "Installing uv via curl..."
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+  fi
+fi
+
 if ! command -v thefuck &> /dev/null; then
-  echo "Installing thefuck via pip3..."
-  sudo pip3 install thefuck
+  echo "Installing thefuck via uv..."
+  sudo uv tool install thefuck
 fi
 
 echo "Installing spin specific tools..."
