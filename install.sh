@@ -75,3 +75,8 @@ if [ -f $HOME/.vimrc ]; then
   echo "Backed up existing .vimrc to .vimrc_backup"
 fi
 ln -s $PWD/.vimrc $HOME/.vimrc
+
+echo "Setting up Claude commands..."
+mkdir -p $HOME/.claude/commands
+cp -r claude/commands/* $HOME/.claude/commands/
+echo "Claude commands copied successfully"
