@@ -76,6 +76,23 @@ if [ -f $HOME/.vimrc ]; then
 fi
 ln -s $PWD/.vimrc $HOME/.vimrc
 
+echo "Installing Nix package manager..."
+if ! command -v nix &> /dev/null; then
+  echo "Nix not found, installing..."
+  curl -L https://nixos.org/nix/install | sh
+  source $HOME/.nix-profile/etc/profile.d/nix.sh
+else
+  echo "Nix already installed"
+fi
+
+echo "Configuring Nix to allow unfree packages..."
+mkdir -p $HOME/.config/nixpkgs
+echo "{ allowUnfree = true; }" > $HOME/.config/nixpkgs/config.nix
+
+echo "Installing tools via Nix..."
+nix-env -i -f ./tools.nix
+echo "Nix tools installed successfully"
+
 echo "Setting up Claude commands..."
 mkdir -p $HOME/.claude/commands
 cp -r claude/commands/* $HOME/.claude/commands/

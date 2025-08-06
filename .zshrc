@@ -8,6 +8,10 @@ fi
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
+# Nix
+if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then
+  . $HOME/.nix-profile/etc/profile.d/nix.sh
+fi
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
@@ -37,6 +41,7 @@ zstyle :bracketed-paste-magic paste-finish pastefinish
 if [[ $(command -v thefuck) ]]; then
   eval $(thefuck --alias)
 fi
+
 if [[ $(command -v gt) ]]; then
   source <(gt completion)
 fi
