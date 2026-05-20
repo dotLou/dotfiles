@@ -1,0 +1,108 @@
+# Starship prompt config — mirrors p10k layout
+# Line 1: worldpath (custom) + right-side info
+# Line 2: prompt character
+
+format = """
+$custom\
+$fill\
+$status\
+$cmd_duration\
+$jobs\
+$ruby\
+$username\
+$hostname\
+$line_break\
+$character"""
+
+# Don't add a blank line between prompts
+add_newline = false
+
+[custom.worldpath]
+command = "worldpath --full --spare"
+when = true
+format = "[$output]($style) "
+style = "blue"
+shell = ["sh"]
+
+[git_branch]
+disabled = true
+
+[git_status]
+disabled = true
+
+[fill]
+symbol = " "
+
+[status]
+disabled = false
+format = "[$symbol$status]($style) "
+style = "red"
+
+[cmd_duration]
+min_time = 2_000
+format = "took [$duration]($style) "
+style = "yellow"
+
+[jobs]
+disabled = false
+format = "[$symbol$number]($style) "
+style = "blue"
+
+[ruby]
+format = "[$symbol($version)]($style) "
+style = "red"
+detect_files = ["Gemfile", ".ruby-version"]
+
+[username]
+show_always = false
+format = "[$user]($style)@"
+style_user = "green"
+
+[hostname]
+ssh_only = true
+format = "[$hostname]($style) "
+style = "green"
+
+[character]
+success_symbol = "[❯](green)"
+error_symbol = "[❯](red)"
+
+# Disable modules we don't use to keep it fast
+[nodejs]
+disabled = true
+
+[python]
+disabled = true
+
+[golang]
+disabled = true
+
+[rust]
+disabled = true
+
+[java]
+disabled = true
+
+[php]
+disabled = true
+
+[dotnet]
+disabled = true
+
+[package]
+disabled = true
+
+[docker_context]
+disabled = true
+
+[terraform]
+disabled = true
+
+[aws]
+disabled = true
+
+[gcloud]
+disabled = true
+
+[kubernetes]
+disabled = true

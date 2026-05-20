@@ -26,6 +26,23 @@ git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$
 echo "Linking powerlevel10k config..."
 ln -s $PWD/.p10k.zsh $HOME/.p10k.zsh
 
+echo "Installing starship..."
+if ! command -v starship &> /dev/null; then
+  if command -v brew &> /dev/null; then
+    echo "Installing starship via brew..."
+    brew install starship
+  else
+    echo "Installing starship via curl..."
+    curl -sS https://starship.rs/install.sh | sh -s -- -y
+  fi
+else
+  echo "Starship already installed"
+fi
+
+echo "Linking starship config..."
+mkdir -p $HOME/.config
+ln -sf $PWD/starship.toml $HOME/.config/starship.toml
+
 echo "Linking gitconfig..."
 rm -rf $HOME/.gitconfig
 ln -s $PWD/.gitconfig $HOME/.gitconfig
