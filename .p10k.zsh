@@ -33,7 +33,8 @@
   typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
     # =========================[ Line #1 ]=========================
     # os_icon               # os identifier
-    dir                     # current directory
+    # dir                     # current directory
+    worldpath
     # vcs                     # git status
     # =========================[ Line #2 ]=========================
     newline                 # \n
@@ -1539,6 +1540,15 @@
   # Type `p10k help segment` for documentation and a more sophisticated example.
   function prompt_example() {
     p10k segment -f 208 -i '⭐' -t 'hello, %n'
+  }
+
+  function prompt_worldpath() {
+    if (( $+commands[worldpath] )); then
+      local output="$(worldpath --zsh 2>/dev/null)"
+      if [[ -n "$output" ]]; then
+        p10k segment -f $POWERLEVEL9K_DIR_FOREGROUND -i '🌐' -t "$output"
+      fi
+    fi
   }
 
   # User-defined prompt segments may optionally provide an instant_prompt_* function. Its job
