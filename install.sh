@@ -39,6 +39,13 @@ else
   echo "Starship already installed"
 fi
 
+echo "Installing FiraCode Nerd Font..."
+if command -v brew &> /dev/null; then
+  brew install --cask font-fira-code-nerd-font
+else
+  echo "brew not available, install FiraCode Nerd Font manually"
+fi
+
 echo "Linking starship config..."
 mkdir -p $HOME/.config
 ln -sf $PWD/starship.toml $HOME/.config/starship.toml

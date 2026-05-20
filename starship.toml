@@ -1,28 +1,56 @@
-# Starship prompt config — mirrors p10k layout
-# Line 1: worldpath (custom) + right-side info
-# Line 2: prompt character
+# Starship prompt config
+#
+# Custom module handles directory + branch display everywhere.
+# When `worldpath` is available and returns output, uses it for richer context.
+# Otherwise falls back to standard pwd + git branch.
+# git_status disabled for performance.
+
+add_newline = false
 
 format = """
 $custom\
-$fill\
-$status\
-$cmd_duration\
-$jobs\
-$ruby\
-$username\
-$hostname\
-$line_break\
-$character"""
+$all"""
 
-# Don't add a blank line between prompts
-add_newline = false
-
-[custom.worldpath]
-command = "worldpath --full --spare"
+[custom.dir]
+description = "Smart directory + branch display with worldpath support"
+command = '''
+tree=$(worldpath -t --spare 2>/dev/null)
+if [ -n "$tree" ]; then
+  path=$(worldpath -p --spare 2>/dev/null)
+  branch=$(worldpath -b --spare 2>/dev/null)
+  printf " %s%s on  %s" "$tree" "$path" "$branch"
+else
+  # If in a git repo, show repo name + path within it; otherwise last 2 segments
+  repo_root=$(git rev-parse --show-toplevel 2>/dev/null)
+  if [ -n "$repo_root" ]; then
+    repo_name=$(basename "$repo_root")
+    # Resolve symlinks so prefix strip works
+    real_root=$(cd "$repo_root" && pwd -P)
+    real_cwd=$(pwd -P)
+    sub="${real_cwd#$real_root}"
+    dir="${repo_name}${sub}"
+  else
+    home="$HOME"
+    cwd="$PWD"
+    rel="${cwd#$home}"
+    if [ "$rel" != "$cwd" ]; then rel="~$rel"; else rel="$cwd"; fi
+    dir=$(echo "$rel" | awk -F/ '{if(NF<=2)print $0; else printf "%s/%s",$(NF-1),$NF}')
+  fi
+  branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+  if [ -n "$branch" ]; then
+    printf "%s on  %s" "$dir" "$branch"
+  else
+    printf "%s" "$dir"
+  fi
+fi
+'''
 when = true
 format = "[$output]($style) "
-style = "blue"
+style = "bold cyan"
 shell = ["sh"]
+
+[directory]
+disabled = true
 
 [git_branch]
 disabled = true
@@ -30,79 +58,55 @@ disabled = true
 [git_status]
 disabled = true
 
-[fill]
-symbol = " "
-
-[status]
-disabled = false
-format = "[$symbol$status]($style) "
-style = "red"
-
-[cmd_duration]
-min_time = 2_000
-format = "took [$duration]($style) "
-style = "yellow"
-
-[jobs]
-disabled = false
-format = "[$symbol$number]($style) "
-style = "blue"
-
-[ruby]
-format = "[$symbol($version)]($style) "
-style = "red"
-detect_files = ["Gemfile", ".ruby-version"]
-
-[username]
-show_always = false
-format = "[$user]($style)@"
-style_user = "green"
-
-[hostname]
-ssh_only = true
-format = "[$hostname]($style) "
-style = "green"
-
 [character]
 success_symbol = "[❯](green)"
 error_symbol = "[❯](red)"
 
-# Disable modules we don't use to keep it fast
+[status]
+disabled = false
+
+[cmd_duration]
+min_time = 2_000
+
+[jobs]
+disabled = false
+
+[ruby]
+detect_files = ["Gemfile", ".ruby-version"]
+
+[username]
+show_always = false
+
+[hostname]
+ssh_only = true
+
+# Disable unused modules
 [nodejs]
 disabled = true
-
 [python]
 disabled = true
-
 [golang]
 disabled = true
-
 [rust]
 disabled = true
-
 [java]
 disabled = true
-
 [php]
 disabled = true
-
 [dotnet]
 disabled = true
-
 [package]
 disabled = true
-
 [docker_context]
 disabled = true
-
 [terraform]
 disabled = true
-
 [aws]
 disabled = true
-
 [gcloud]
 disabled = true
-
 [kubernetes]
+disabled = true
+
+[nix_shell]
 disabled = true
