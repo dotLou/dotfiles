@@ -118,7 +118,6 @@ fi
 export KUBECONFIG=${KUBECONFIG:+$KUBECONFIG:}/Users/louiscloutier/.kube/config:/Users/louiscloutier/.kube/config.shopify.cloudplatform
 for file in /Users/louiscloutier/src/github.com/Shopify/cloudplatform/workflow-utils/*.bash; do source ${file}; done
 kubectl-short-aliases
-export SHOPIFY_TALENT_TOKEN="0TUovplGm0ltUI1v616Ih9xaJN2e1Q1J0yhp9WZCI1c"
 
 ## Fix ghostty pathing issues, from https://vault.shopify.io/posts/382372-Ghostty-splits-opening-in-the-wrong-World-worktree-Copy-this-script
 if [[ -n ${GHOSTTY_RESOURCES_DIR:-} ]]; then
