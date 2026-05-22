@@ -18,7 +18,7 @@ tree=$(worldpath -t --spare 2>/dev/null)
 if [ -n "$tree" ]; then
   path=$(worldpath -p --spare 2>/dev/null)
   branch=$(worldpath -b --spare 2>/dev/null)
-  printf " %s%s on  %s" "$tree" "$path" "$branch"
+  printf "🌎%s%s on  %s" "$tree" "$path" "$branch"
 else
   # If in a git repo, show repo name + path within it; otherwise last 2 segments
   repo_root=$(git rev-parse --show-toplevel 2>/dev/null)
