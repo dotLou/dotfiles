@@ -33,14 +33,12 @@ if [[ "$PROMPT_THEME" == "p10k" ]]; then
   export ZSH="$HOME/.oh-my-zsh"
   ZSH_THEME="powerlevel10k/powerlevel10k"
   plugins+=(git zsh-completions zsh-autosuggestions zsh-syntax-highlighting)
-  autoload -U compinit && compinit
   source $ZSH/oh-my-zsh.sh
 else
   # Starship — load oh-my-zsh without a theme, then init starship
   export ZSH="$HOME/.oh-my-zsh"
   ZSH_THEME=""
   plugins+=(git zsh-completions zsh-autosuggestions zsh-syntax-highlighting)
-  autoload -U compinit && compinit
   source $ZSH/oh-my-zsh.sh
   eval "$(starship init zsh)"
 fi
@@ -67,14 +65,6 @@ fi
 
 if [[ $(command -v thefuck) ]]; then
   eval $(thefuck --alias)
-fi
-
-if [[ $(command -v gt) ]]; then
-  source <(gt completion)
-fi
-
-if [[ $(command -v spin) ]]; then
-  source <(spin completion)
 fi
 
 if [[ $(command -v journalctl) ]]; then
