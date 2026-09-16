@@ -50,9 +50,28 @@ echo "Linking starship config..."
 mkdir -p $HOME/.config
 ln -sf $PWD/starship.toml $HOME/.config/starship.toml
 
-echo "Linking gitconfig..."
-rm -rf $HOME/.gitconfig
-ln -s $PWD/.gitconfig $HOME/.gitconfig
+echo "Configuring gitconfig..."
+DOTFILES_GITCONFIG="$PWD/.gitconfig"
+LOCAL_GITCONFIG="$HOME/.gitconfig"
+
+if [ -L "$LOCAL_GITCONFIG" ]; then
+  BACKUP_PATH="$HOME/.gitconfig.symlink_backup.$(date +%Y%m%d%H%M%S)"
+  echo "Backing up existing ~/.gitconfig symlink to $BACKUP_PATH"
+  mv "$LOCAL_GITCONFIG" "$BACKUP_PATH"
+  touch "$LOCAL_GITCONFIG"
+elif [ ! -e "$LOCAL_GITCONFIG" ]; then
+  touch "$LOCAL_GITCONFIG"
+elif [ ! -f "$LOCAL_GITCONFIG" ]; then
+  echo "ERROR: ~/.gitconfig exists but is not a regular file or symlink. Refusing to modify it."
+  exit 1
+fi
+
+if git config --global --get-all include.path 2>/dev/null | grep -Fxq "$DOTFILES_GITCONFIG"; then
+  echo "~/.gitconfig already includes dotfiles gitconfig"
+else
+  echo "Adding include for dotfiles gitconfig to ~/.gitconfig"
+  git config --global --add include.path "$DOTFILES_GITCONFIG"
+fi
 
 echo "Installing tools..."
 

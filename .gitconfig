@@ -1,6 +1,3 @@
-[user]
-	name = Louis Cloutier
-	email = louis.cloutier@shopify.com
 [commit]
 	gpgsign = true
 [rebase]
@@ -10,13 +7,3 @@
 	autoSetupRemote = true
 [init]
 	defaultBranch = main
-[include]
-	path = /Users/louiscloutier/.config/dev/gitconfig
-[maintenance]
-	repo = /Users/louiscloutier/world/git
-[credential "https://github.com"]
-	helper = 
-	helper = !/Users/louiscloutier/.local/state/tec/profiles/base/current/global/bin/gh.unwrapped auth git-credential
-[credential "https://gist.github.com"]
-	helper = 
-	helper = !/Users/louiscloutier/.local/state/tec/profiles/base/current/global/bin/gh.unwrapped auth git-credential
