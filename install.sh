@@ -50,6 +50,19 @@ echo "Linking starship config..."
 mkdir -p $HOME/.config
 ln -sf $PWD/starship.toml $HOME/.config/starship.toml
 
+echo "Linking Ghostty config..."
+GHOSTTY_CONFIG="$HOME/.config/ghostty"
+if [ -e "$GHOSTTY_CONFIG" ] && [ ! -L "$GHOSTTY_CONFIG" ]; then
+  GHOSTTY_BACKUP="${GHOSTTY_CONFIG}_backup"
+  if [ -e "$GHOSTTY_BACKUP" ]; then
+    echo "Cannot back up existing Ghostty config: $GHOSTTY_BACKUP already exists"
+    exit 1
+  fi
+  mv "$GHOSTTY_CONFIG" "$GHOSTTY_BACKUP"
+  echo "Backed up existing Ghostty config to $GHOSTTY_BACKUP"
+fi
+ln -sfn "$PWD/ghostty" "$GHOSTTY_CONFIG"
+
 echo "Configuring gitconfig..."
 DOTFILES_GITCONFIG="$PWD/.gitconfig"
 LOCAL_GITCONFIG="$HOME/.gitconfig"
