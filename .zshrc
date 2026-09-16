@@ -111,7 +111,10 @@ kubectl-short-aliases
 
 ## Fix ghostty pathing issues, from https://vault.shopify.io/posts/382372-Ghostty-splits-opening-in-the-wrong-World-worktree-Copy-this-script
 if [[ -n ${GHOSTTY_RESOURCES_DIR:-} ]]; then
-  source "$GHOSTTY_RESOURCES_DIR/shell-integration/zsh/ghostty-integration"
+  # cmux embeds ghostty and exports GHOSTTY_RESOURCES_DIR, but ships no
+  # shell-integration script — guard the source so it only runs under real ghostty.
+  [[ -r "$GHOSTTY_RESOURCES_DIR/shell-integration/zsh/ghostty-integration" ]] && \
+    source "$GHOSTTY_RESOURCES_DIR/shell-integration/zsh/ghostty-integration"
 
   _ghostty_report_pwd_with_local_hostname() {
     builtin emulate -L zsh -o no_aliases
