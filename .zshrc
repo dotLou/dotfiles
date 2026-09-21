@@ -104,12 +104,25 @@ fi
 
 [ -f /opt/dev/dev.sh ] && source /opt/dev/dev.sh
 
-# cloudplatform: add Shopify clusters to your local kubernetes config
-export KUBECONFIG=${KUBECONFIG:+$KUBECONFIG:}/Users/louiscloutier/.kube/config:/Users/louiscloutier/.kube/config.shopify.cloudplatform
-for file in /Users/louiscloutier/src/github.com/Shopify/cloudplatform/workflow-utils/*.bash; do source ${file}; done
-kubectl-short-aliases
+# cloudplatform (work-only): add Shopify clusters to your local kubernetes
+# config and load workflow utilities. Guarded so it is a no-op on machines
+# without the Shopify checkout (e.g. personal machines).
+wf_utils=/Users/louiscloutier/src/github.com/Shopify/cloudplatform/workflow-utils
+wf_files=($wf_utils/*.bash(N))
+if (( ${#wf_files} )); then
+  export KUBECONFIG=${KUBECONFIG:+$KUBECONFIG:}/Users/louiscloutier/.kube/config:/Users/louiscloutier/.kube/config.shopify.cloudplatform
+  for file in $wf_files; do
+    [[ -f $file ]] && source $file
+  done
+fi
+unset wf_utils wf_files file
 
-## Fix ghostty pathing issues, from https://vault.shopify.io/posts/382372-Ghostty-splits-opening-in-the-wrong-World-worktree-Copy-this-script
+# kubectl-short-aliases is provided by the cloudplatform workflow-utils above
+# (or /opt/dev on Shopify machines) — only run it when present.
+if command -v kubectl-short-aliases >/dev/null 2>&1; then
+  kubectl-short-aliases
+fi
+
 if [[ -n ${GHOSTTY_RESOURCES_DIR:-} ]]; then
   # cmux embeds ghostty and exports GHOSTTY_RESOURCES_DIR, but ships no
   # shell-integration script — guard the source so it only runs under real ghostty.
