@@ -152,6 +152,11 @@ else
   git config --global --add include.path "$DOTFILES_GITCONFIG"
 fi
 
+# --- npm ---------------------------------------------------------------------
+
+echo "Linking npm config..."
+link_dotfile "$PWD/.npmrc" "$HOME/.npmrc"
+
 echo "Installing tools..."
 
 # load packages to install array from packages.yml into packages_to_install using mapfile
