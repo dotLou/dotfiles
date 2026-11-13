@@ -1,6 +1,7 @@
 # === PATH SETUP (order matters: later = higher priority) ===
 # Homebrew (lowest priority)
 [[ -x /opt/homebrew/bin/brew ]] && eval $(/opt/homebrew/bin/brew shellenv)
+[[ -d /opt/homebrew/opt/rustup/bin ]] && export PATH="/opt/homebrew/opt/rustup/bin:$PATH"
 
 export PATH="$HOME/.local/bin:$PATH" # add local bin, so native installs (like claude) are in the path
 

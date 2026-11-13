@@ -186,6 +186,15 @@ echo "Installing/updating thefuck via uv..."
 # self-heals a broken venv (e.g. a removed base python).
 uv tool install --reinstall thefuck
 
+echo "Installing rustup..."
+if command -v brew &> /dev/null; then
+  brew_formula rustup
+  echo "Installing/updating the stable Rust toolchain..."
+  "$(brew --prefix rustup)/bin/rustup" toolchain install stable
+else
+  echo "brew not available, install rustup manually"
+fi
+
 echo "Installing spin specific tools..."
 if [ -n "${SPIN:-}" ]; then
   echo "Ensure dirmngr daemon is started..."
