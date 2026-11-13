@@ -58,3 +58,5 @@ keybind = opt+backspace=text:\x1b\x7f
 keybind = cmd+backspace=text:\x15
 keybind = opt+left=text:\x1bb
 keybind = opt+right=text:\x1bf
+# Clear in plain shells; on the alternate screen (herdr) pass Cmd+K through to herdr's clear_pane
+keybind = performable:super+k=clear_screen
